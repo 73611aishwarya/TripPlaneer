@@ -137,3 +137,9 @@ p a {
 p a:hover {
   text-decoration: underline;
 }
+
+body {
+  background-color: #d3d3d3; /* Light gray color */
+  margin: 0; /* Remove default margin */
+  font-family: Arial, sans-serif; /* Optional: Set a default font */
+}
