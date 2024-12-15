@@ -1,0 +1,83 @@
+.register-page {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .register-page h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .register-page p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .register-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .register-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .register-form input,
+  .register-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .register-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox-group input {
+    margin-right: 10px;
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+  }
+  
+  .login-link a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
