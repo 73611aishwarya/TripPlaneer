@@ -84,7 +84,7 @@ const Step1 = ({ onNext }) => {
 
 const styles = {
   container: {
-    backgroundColor: '#FFFDD0', // Pastel pista color
+    backgroundColor: '#e6f7ff', // Pastel pista color
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     padding: '30px',
