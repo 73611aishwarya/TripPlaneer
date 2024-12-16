@@ -6,7 +6,7 @@
   .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #0056b3;
+    background-color: #87CEEB;
     padding: 20px;
     color: white;
   }
@@ -147,7 +147,7 @@
   
   /* Footer Section */
   footer {
-    background-color: #0056b3;
+    background-color: #87CEEB;
     color: white;
     text-align: center;
     padding: 30px;
