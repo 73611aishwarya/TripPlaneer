@@ -1,0 +1,98 @@
+/* General Container */
+.about-us-container {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.about-us-header {
+    background-color: #87CEEB;  /* Sky Blue color for the header */
+    color: white;
+    padding: 40px;
+    text-align: center;
+    border-bottom: 5px solid #94d2bd; /* Light accent border */
+}
+
+.about-us-header h1 {
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.about-us-content {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white; /* Keep the content area white */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #005f73;
+    margin-top: 30px;
+    border-bottom: 2px solid #94d2bd;
+    padding-bottom: 5px;
+}
+
+.section-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.offerings-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    font-size: 1.1rem;
+}
+
+.offerings-list li {
+    margin-bottom: 12px;
+}
+
+.contact-text {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.7;
+}
+
+.contact-text a {
+    color: #005f73;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-text a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-us-container {
+        padding: 10px;
+    }
+
+    .about-us-header {
+        padding: 30px;
+    }
+
+    .about-us-content {
+        padding: 15px;
+    }
+
+    .about-us-header h1 {
+        font-size: 2.5rem;
+    }
+}
