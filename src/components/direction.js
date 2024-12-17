@@ -1,20 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Directions = ({ onBack }) => {
+  useEffect(() => {
+    const loadMap = () => {
+      const directionsService = new window.google.maps.DirectionsService();
+      const directionsRenderer = new window.google.maps.DirectionsRenderer();
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+        zoom: 7,
+        center: { lat: 19.076, lng: 72.8777 }, // Centered around Pune
+      });
+      directionsRenderer.setMap(map);
+
+      const request = {
+        origin: 'Pune, India',
+        destination: 'Nashik, India',
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      };
+
+      directionsService.route(request, (result, status) => {
+        if (status === window.google.maps.DirectionsStatus.OK) {
+          directionsRenderer.setDirections(result);
+        } else {
+          console.error('Error fetching directions: ', result);
+        }
+      });
+    };
+
+    // Load the Google Maps script
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBIeYEetesE15bOgXFVfibBWCyheA0yJNs&callback=initMap`;
+    script.async = true;
+    script.defer = true;
+    window.initMap = loadMap;
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Directions</h2>
-      <div style={styles.mapContainer}>
-        <iframe
-          title="Google Map"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509123!2d144.9537353153164!3d-37.81627997975157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11f3b3%3A0x5045675218ceed0!2sMelbourne%20CBD%2C%20Victoria%2C%20Australia!5e0!3m2!1sen!2sus!4v1616161616161!5m2!1sen!2sus"
-          width="100%"
-          height="400"
-          style={{ border: 0 }}
-          allowFullScreen=""
-          loading="lazy"
-        ></iframe>
-      </div>
+      <div id="map" style={styles.mapContainer}></div>
       <h3 style={styles.subtitle}>Climate Conditions</h3>
       <p style={styles.details}>Current weather conditions for your route will be displayed here.</p>
       <div style={styles.buttonContainer}>
@@ -45,6 +69,7 @@ const styles = {
     marginBottom: '10px',
   },
   mapContainer: {
+    height: '400px',
     marginBottom: '20px',
   },
   details: {

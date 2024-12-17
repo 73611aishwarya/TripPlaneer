@@ -1,4 +1,8 @@
 import React from 'react';
+import trainImage from './train1.jpg'; 
+import busImage from './bus.jpg'; 
+import carImage from './car.jpg';
+import bikeImage from './bike.jpg';  
 
 const Step3 = ({ onNext, onBack }) => {
   const [travelOption, setTravelOption] = React.useState('');
@@ -6,10 +10,10 @@ const Step3 = ({ onNext, onBack }) => {
   const [quote, setQuote] = React.useState('');
 
   const options = [
-    { name: 'Bus', image: 'https://via.placeholder.com/150?text=Bus', subOptions: ['AC Sitter', 'Non-AC Sitter', 'Non-AC Sleeper', 'AC Sleeper'] },
-    { name: 'Train', image: 'https://via.placeholder.com/150?text=Train', subOptions: ['AC', 'RAC', '2AC', 'Sitter'] },
-    { name: 'Car', image: 'https://via.placeholder.com/150?text=Car', subOptions: ['Private Car', 'Rental Car'] },
-    { name: 'Bike', image: 'https://via.placeholder.com/150?text=Bike', subOptions: ['Standard', 'Sport'] },
+    { name: 'Bus', image: busImage, subOptions: ['AC Sitter', 'Non-AC Sitter', 'Non-AC Sleeper', 'AC Sleeper'] },
+    { name: 'Train', image: trainImage, subOptions: ['AC', 'RAC', '2AC', 'Sitter'] }, // Use imported image
+    { name: 'Car', image:  carImage, subOptions: ['Private Car', 'Rental Car'] },
+    { name: 'Bike', image: bikeImage, subOptions: ['Standard', 'Sport'] },
   ];
 
   const handleSelect = (option) => {
@@ -101,7 +105,7 @@ const styles = {
   optionsContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
- gap: '20px',
+    gap: '20px',
     marginBottom: '20px',
   },
   option: {

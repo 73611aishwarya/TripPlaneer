@@ -42,7 +42,7 @@ const App = () => {
         <Route path="/step3" element={<StepWrapper step={3} />} />
         <Route path="/step4" element={<StepWrapper step={4} />} />
         <Route path="/summary" element={<SummaryWrapper />} />
-        <Route path="/direction" element={<Directions />} />
+        <Route path="/direction" element={<DirectionsWrapper />} />
       </Routes>
     </Router>
   );
@@ -99,6 +99,19 @@ const SummaryWrapper = () => {
       onBack={handleBack} 
     />
   );
+};
+
+const DirectionsWrapper = () => {
+  const location = useLocation();
+  const { details = {}, totalBudget = 0 } = location.state || {}; // Retrieve passed state
+
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/summary', { state: { details, totalBudget } }); // Navigate back to Summary
+  };
+
+  return <Directions onBack={handleBack} />;
 };
 
 export default App;

@@ -1,15 +1,19 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+import hotelImage from './hotel.jpg'; // Import hotel image
+import villaImage from './villa.jpg'; // Import villa image
+import pgImage from './pg.jpg'; // Import PG image
+import othersImage from './other.jpg'; // Import other accommodation image
 
 const Step4 = ({ onNext, onBack }) => {
   const [option, setOption] = React.useState('');
   const [subOption, setSubOption] = React.useState('');
 
   const accommodationOptions = {
-    Hotels: ['1 Star', '2 Star', '3 Star', '5 Star'],
-    Villas: ['1 BHK', '2 BHK', '3 BHK'],
-    PGs: ['1 Room', '2 Rooms', '3 Rooms'],
-    Others: ['Own House', 'Relative House', 'Other'],
+    Hotels: { image: hotelImage, subOptions: ['1 Star', '2 Star', '3 Star', '5 Star'] },
+    Villas: { image: villaImage, subOptions: ['1 BHK', '2 BHK', '3 BHK'] },
+    PGs: { image: pgImage, subOptions: ['1 Room', '2 Rooms', '3 Rooms'] },
+    Others: { image: othersImage, subOptions: ['Own House', 'Relative House', 'Other'] },
   };
 
   const handleSelect = (selectedOption) => {
@@ -43,7 +47,10 @@ const Step4 = ({ onNext, onBack }) => {
             }}
             onClick={() => handleSelect(selectedOption)}
           >
-            <h3>{selectedOption}</h3>
+            <div style={styles.imageContainer}>
+              <img src={accommodationOptions[selectedOption].image} alt={selectedOption} style={styles.image} />
+              <h3>{selectedOption}</h3>
+            </div>
           </div>
         ))}
       </div>
@@ -54,7 +61,7 @@ const Step4 = ({ onNext, onBack }) => {
       )}
       {option && (
         <div style={styles.subOptionsContainer}>
-          {accommodationOptions[option].map(sub => (
+          {accommodationOptions[option].subOptions.map(sub => (
             <div
               key={sub}
               style={{
@@ -99,7 +106,7 @@ const styles = {
     marginBottom: '20px',
   },
   option: {
-    padding: '15px',
+    padding : '15px',
     borderRadius: '5px',
     cursor: 'pointer',
     textAlign: 'center',
@@ -109,6 +116,16 @@ const styles = {
     position: 'relative',
     transition: 'background-color 0.3s ease',
   },
+  imageContainer: {
+    position: 'relative',
+    height: '100%',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '5px',
+    objectFit: 'cover',
+  },
   subOptionsContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -117,7 +134,7 @@ const styles = {
   },
   subOptionsHeader: {
     marginTop: '20px',
- textAlign: 'center',
+    textAlign: 'center',
   },
   subOptionsTitle: {
     fontSize: '20px',
