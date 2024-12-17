@@ -13,6 +13,7 @@ import Step3 from './components/Step3'; // Import Step3 component
 import Step4 from './components/Step4'; // Import Step4 component
 import Summary from './components/Summary'; // Import Summary component
 import Directions from './components/direction'; // Import Directions component
+import HelpPage from './components/HelpPage';
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
         <Route path="/step4" element={<StepWrapper step={4} />} />
         <Route path="/summary" element={<SummaryWrapper />} />
         <Route path="/direction" element={<Directions />} />
+        <Route path="/HelpPage" element={<HelpPage/>}/>
       </Routes>
     </Router>
   );
