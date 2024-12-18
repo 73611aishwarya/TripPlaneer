@@ -15,42 +15,27 @@ import Summary from './components/Summary'; // Import Summary component
 import Directions from './components/direction'; // Import Directions component
 import HelpPage from './components/HelpPage';
 import ForgotPassword from './ForgotPassword'; // Import ForgotPassword component
+import AboutUs from './AboutUs'; // Import AboutUs component
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        {/* Home Page Route */}
         <Route path="/" element={<HomePage />} />
-
-        {/* Explore Page Route */}
         <Route path="/explore" element={<ExplorePage />} />
-
-        {/* Login Page Route */}
         <Route path="/login" element={<LoginPage />} />
-
-        {/* Forgot Password Route */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
-
-        {/* Register Page Route */}
         <Route path="/register" element={<RegisterPage />} />
-
-        {/* Contact Us Page Route */}
         <Route path="/contact" element={<ContactUsPage />} />
-
-        {/* Main Page Route */}
+        <Route path="/aboutus" element={<AboutUs />} /> {/* Added About Us route */}
         <Route path="/main" element={<Main />} />
-
-        {/* Step Routes */}
         <Route path="/step1" element={<StepWrapper step={1} />} />
         <Route path="/step2" element={<StepWrapper step={2} />} />
         <Route path="/step3" element={<StepWrapper step={3} />} />
         <Route path="/step4" element={<StepWrapper step={4} />} />
         <Route path="/summary" element={<SummaryWrapper />} />
-
         <Route path="/direction" element={<DirectionsWrapper />} />
-
-        <Route path="/HelpPage" element={<HelpPage />} />
+        <Route path="/help" element={<HelpPage />} />
       </Routes>
     </Router>
   );
@@ -64,14 +49,14 @@ const StepWrapper = ({ step }) => {
   const handleNext = (data) => {
     setDetails((prevDetails) => ({ ...prevDetails, ...data }));
     if (step === 4) {
-      navigate('/summary', { state: { details: { ...details, ...data }, totalBudget } }); // Pass updated details
+      navigate('/summary', { state: { details: { ...details, ...data }, totalBudget } });
     } else {
-      navigate(`/step${step + 1}`); // Navigate to the next step
+      navigate(`/step${step + 1 }`);
     }
   };
 
   const handleBack = () => {
-    navigate(`/step${step - 1}`); // Navigate to the previous step
+    navigate(`/step${step - 1}`);
   };
 
   return (
@@ -86,23 +71,23 @@ const StepWrapper = ({ step }) => {
 
 const SummaryWrapper = () => {
   const location = useLocation();
-  const { details = {}, totalBudget = 0 } = location.state || {}; // Retrieve passed state
+  const { details = {}, totalBudget = 0 } = location.state || {};
 
   const navigate = useNavigate();
 
   const handleProceed = () => {
-    navigate('/direction'); // Navigate to Directions
+    navigate('/direction');
   };
 
   const handleBack = () => {
-    navigate('/step4'); // Navigate back to Step 4
+    navigate('/step4');
   };
 
   return (
     <Summary
       details={details}
       totalBudget={totalBudget}
-      accommodation={details.accommodation} // Ensure accommodation is passed correctly
+      accommodation={details.accommodation}
       onProceed={handleProceed}
       onBack={handleBack}
     />
@@ -111,12 +96,12 @@ const SummaryWrapper = () => {
 
 const DirectionsWrapper = () => {
   const location = useLocation();
-  const { details = {}, totalBudget = 0 } = location.state || {}; // Retrieve passed state
+  const { details = {}, totalBudget = 0 } = location.state || {};
 
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate('/summary', { state: { details, totalBudget } }); // Navigate back to Summary
+    navigate('/summary', { state: { details, totalBudget } });
   };
 
   return <Directions onBack={handleBack} />;

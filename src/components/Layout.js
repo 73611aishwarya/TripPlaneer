@@ -1,5 +1,5 @@
-// Layout.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   return (
@@ -7,8 +7,8 @@ const Layout = ({ children }) => {
       <header style={styles.header}>
         <div style={styles.tabs}>
           <span style={styles.tab}>Logout</span>
-          <span style={styles.tab}>Help</span>
-          <span style={styles.tab}>Home</span>
+          <Link to="/help" style={styles.tab}>Help</Link> {/* Updated to use Link */}
+          <Link to="/" style={styles.tab}>Home</Link> {/* Assuming Home is the main page */}
           <span style={styles.tab}>Feedback</span>
         </div>
         <div style={styles.tripPlanner}>Easy Trip Planner</div>
@@ -47,6 +47,7 @@ const styles = {
     color: '#000',
     fontWeight: 'bold',
     transition: 'color 0.3s',
+    textDecoration: 'none', // Ensure links don't have underline
   },
   tripPlanner: {
     fontSize: '1.5rem',

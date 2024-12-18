@@ -1,5 +1,5 @@
 import React from 'react';
-import './AboutUs.css'; // Make sure to import the CSS file
+import './About.css'; // Make sure to import the CSS file
 
 const AboutUs = () => {
     return (
@@ -16,6 +16,7 @@ const AboutUs = () => {
                 <h2 className="section-title">Our Vision</h2>
                 <p className="section-text">
                     At Easy Trip Planner, we envision a world where travel planning is seamless and personalized. We believe that every journey should be memorable, and our platform is dedicated to helping you discover new destinations, engage with local cultures, and create unforgettable experiences.
+                ```javascript
                 </p>
 
                 <h2 className="section-title">What We Offer</h2>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Layout from './Layout'; // Import the Layout component
+import Layout from './Layout';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -12,15 +12,15 @@ const Main = () => {
   ];
 
   const handleBeginTour = () => {
-    navigate('/step1'); // Navigate to Step1 when the button is clicked
+    navigate('/step1');
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Change image every 3 seconds
+    }, 3000);
 
-    return () => clearInterval(interval); // Cleanup on unmount
+    return () => clearInterval(interval);
   }, [images.length]);
 
   return (
@@ -33,7 +33,7 @@ const Main = () => {
           <button 
             style={styles.button} 
             onClick={handleBeginTour}
-            on MouseEnter={(e) => e.currentTarget.style.backgroundColor = '#004494'} 
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#004494'} 
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0056b3'}
           >
             <span style={styles.buttonText}>Begin the Tour</span>

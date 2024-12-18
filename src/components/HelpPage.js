@@ -1,66 +1,51 @@
 import React, { useState } from "react";
 
 const HelpPage = () => {
-  // State to track which FAQ is open
   const [openFAQ, setOpenFAQ] = useState(null);
-  // State to toggle contact info visibility
   const [showContactInfo, setShowContactInfo] = useState(false);
 
-  // FAQ data
   const faqData = [
     {
       question: "How do I plan my trip using Easy Trip Planner?",
-      answer:
-        "Use the trip planner tool to enter destinations, dates, and preferences. We'll generate a tailored itinerary for you!",
+      answer: "Use the trip planner tool to enter destinations, dates, and preferences. We'll generate a tailored itinerary for you!",
     },
     {
       question: "Can I customize my trip itinerary?",
-      answer:
-        "Yes, you can add or remove activities, change timings, and include specific places you'd like to visit.",
+      answer: "Yes, you can add or remove activities, change timings, and include specific places you'd like to visit.",
     },
     {
       question: "How do I book travels and hotels?",
-      answer:
-        "Navigate to the 'Booking' section to browse and book hotels and other travel options.",
+      answer: "Navigate to the 'Booking' section to browse and book hotels and other travel options.",
     },
     {
       question: "Can I save my trip plans for future reference?",
-      answer:
-        "Yes, log in to your account to save and revisit your trip plans anytime.",
+      answer: "Yes, log in to your account to save and revisit your trip plans anytime.",
     },
     {
       question: "What is the cancellation policy?",
-      answer:
-        "The cancellation policy depends on the specific booking. Check the terms and conditions for each service.",
+      answer: "The cancellation policy depends on the specific booking. Check the terms and conditions for each service.",
     },
-    
     {
       question: "How can I contact customer support?",
-      answer:
-        "Click on the 'Contact Support' button or email us at support@easytripplanner.com.",
+      answer: "Click on the 'Contact Support' button or email us at support@easytripplanner.com.",
     },
-   
     {
       question: "Can I modify my bookings after confirmation?",
-      answer:
-        "Yes, modifications are allowed based on the provider’s terms. Visit the 'Manage Bookings' section.",
+      answer: "Yes, modifications are allowed based on the provider’s terms. Visit the 'Manage Bookings' section.",
     },
     {
       question: "What payment methods are accepted?",
-      answer:
-        "We accept credit/debit cards, PayPal, and other secure payment methods.",
+      answer: "We accept credit/debit cards, PayPal, and other secure payment methods.",
     },
   ];
 
-  // Function to toggle FAQ dropdown
   const toggleFAQ = (index) => {
-    setOpenFAQ(openFAQ === index ? null : index); // Toggle open/close
+    setOpenFAQ(openFAQ === index ? null : index);
   };
 
-  // Internal CSS in JavaScript object
   const styles = {
     page: {
-      backgroundImage: "url('/images/Help-BgPage.jpg')", // Update the path based on your file structure
+      backgroundImage: "url('/images/Help-BgPage.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -117,17 +102,17 @@ const HelpPage = () => {
       backgroundColor: "#e9f5ff",
     },
     faqAnswer: {
-      padding: "0 15px", // Padding only on the sides
+      padding: "0 15px",
       fontSize: "16px",
       color: "#555",
       backgroundColor: "#ffffff",
       maxHeight: "0",
       overflow: "hidden",
-      transition: "all 0.3s ease-out", // Smooth transition for height and padding
+      transition: "all 0.3s ease-out",
     },
     faqAnswerOpen: {
-      maxHeight: "200px", // Enough height for the content
-      padding: "15px", // Add padding only when open
+      maxHeight: "200px",
+      padding: "15px",
     },
     contactButton: {
       display: "block",
@@ -157,58 +142,30 @@ const HelpPage = () => {
   return (
     <div style={styles.page}>
       <div style={styles.container}>
-        {/* Logo */}
         <img src="/images/Help-Desk.png" alt="Help Page Logo" style={styles.logo} />
-
-        {/* Header */}
         <h1 style={styles.header}>Help Center</h1>
-
-        {/* FAQ Section */}
         <div style={styles.faqSection}>
           {faqData.map((faq, index) => (
-            <div
-              key={index}
-              style={styles.faqItem}
-              onClick={() => toggleFAQ(index)}
-            >
-              <div
-                style={{
-                  ...styles.faqHeader,
-                  ...(openFAQ === index ? styles.faqHeaderHovered : {}),
-                }}
-              >
+            <div key={index} style={styles.faqItem} onClick={() => toggleFAQ(index)}>
+              <div style={{ ...styles.faqHeader, ...(openFAQ === index ? styles.faqHeaderHovered : {}) }}>
                 {faq.question}
                 <span>{openFAQ === index ? "-" : "+"}</span>
               </div>
-              <div
-                style={{
-                  ...styles.faqAnswer,
-                  ...(openFAQ === index ? styles.faqAnswerOpen : {}),
-                }}
-              >
+              <div style={{ ...styles.faqAnswer, ...(openFAQ === index ? styles.faqAnswerOpen : {}) }}>
                 {faq.answer}
               </div>
             </div>
           ))}
         </div>
-
-        {/* Contact Us Button */}
-        <button
-          style={styles.contactButton}
-          onClick={() => setShowContactInfo(!showContactInfo)}
-        >
+        <button style={styles.contactButton} onClick={() => setShowContactInfo(!showContactInfo)}>
           Contact Us
         </button>
-
-        {/* Contact Information */}
         {showContactInfo && (
           <div style={styles.contactInfo}>
             <p>Email: support@easytripplanner.com</p>
             <p>Phone: +1-800-123-4567</p>
           </div>
         )}
-
-        {/* Footer */}
         <div style={styles.footer}>
           <p>© 2024 Easy Trip Planner. All Rights Reserved.</p>
         </div>
