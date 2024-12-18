@@ -14,6 +14,7 @@ import Step4 from './components/Step4'; // Import Step4 component
 import Summary from './components/Summary'; // Import Summary component
 import Directions from './components/direction'; // Import Directions component
 import HelpPage from './components/HelpPage';
+import ForgotPassword from './ForgotPassword'; // Import ForgotPassword component
 
 const App = () => {
   return (
@@ -27,6 +28,9 @@ const App = () => {
 
         {/* Login Page Route */}
         <Route path="/login" element={<LoginPage />} />
+
+        {/* Forgot Password Route */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Register Page Route */}
         <Route path="/register" element={<RegisterPage />} />
@@ -43,12 +47,10 @@ const App = () => {
         <Route path="/step3" element={<StepWrapper step={3} />} />
         <Route path="/step4" element={<StepWrapper step={4} />} />
         <Route path="/summary" element={<SummaryWrapper />} />
-<<<<<<< HEAD
+
         <Route path="/direction" element={<DirectionsWrapper />} />
-=======
-        <Route path="/direction" element={<Directions />} />
-        <Route path="/HelpPage" element={<HelpPage/>}/>
->>>>>>> origin/main
+
+        <Route path="/HelpPage" element={<HelpPage />} />
       </Routes>
     </Router>
   );
@@ -60,7 +62,7 @@ const StepWrapper = ({ step }) => {
   const [totalBudget, setTotalBudget] = useState(0);
 
   const handleNext = (data) => {
-    setDetails(prevDetails => ({ ...prevDetails, ...data }));
+    setDetails((prevDetails) => ({ ...prevDetails, ...data }));
     if (step === 4) {
       navigate('/summary', { state: { details: { ...details, ...data }, totalBudget } }); // Pass updated details
     } else {
@@ -97,12 +99,12 @@ const SummaryWrapper = () => {
   };
 
   return (
-    <Summary 
-      details={details} 
-      totalBudget={totalBudget} 
+    <Summary
+      details={details}
+      totalBudget={totalBudget}
       accommodation={details.accommodation} // Ensure accommodation is passed correctly
-      onProceed={handleProceed} 
-      onBack={handleBack} 
+      onProceed={handleProceed}
+      onBack={handleBack}
     />
   );
 };
