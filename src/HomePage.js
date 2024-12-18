@@ -33,7 +33,7 @@ function HomePage() {
           <ul>
             <li><Link to="/aboutus">About Us</Link></li>
             <li><Link to="/feedback">Feedback</Link></li>
-            <li><a href="#logout">Logout</a></li>
+            <li><Link to="#logout">Logout</Link></li>
             <li><Link to="/contact">Contact Us</Link></li>
           </ul>
         </nav>
@@ -43,16 +43,18 @@ function HomePage() {
       <main className="hero">
         <h1>{heroText}</h1>
         <p>Plan your dream trips with ease and explore the world!</p>
-        <button className="explore-button" onClick={handleStartExploring}>
-          <Link to="/explore" style={{ textDecoration: 'none', color: 'inherit' }}>
-            Start Exploring
-          </Link>
-        </button>
-        <button className="login-button">
-          <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-            Login
-          </Link>
-        </button>
+        <div className="hero-buttons"> {/* Added a div to wrap the buttons */}
+          <button className="explore-button" onClick={handleStartExploring}>
+            <Link to="/explore" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Start Exploring
+            </Link>
+          </button>
+          <button className="login-button">
+            <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Login
+            </Link>
+          </button>
+        </div>
       </main>
 
       {/* Featured Destinations Section - Dynamic Rendering */}
