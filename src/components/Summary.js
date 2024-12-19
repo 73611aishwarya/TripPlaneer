@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Summary = ({ details, totalBudget = 15000, accommodation, onProceed, onBack }) => {
+const Summary = ({ details, totalBudget = 15000, totalDistance = 126, totalTime = "2 hours", accommodation, onProceed, onBack }) => {
   const [isDownloading, setIsDownloading] = useState(false); // State for download status
 
   const handleDownload = () => {
@@ -40,7 +40,13 @@ const Summary = ({ details, totalBudget = 15000, accommodation, onProceed, onBac
 
       <div style={styles.budgetCard}>
         <h3 style={styles.cardTitle}>Total Budget</h3>
-        <p style={styles.budget}>₹{totalBudget}</p>
+        <p style={styles.budget}>₹15000</p>
+      </div>
+
+      <div style={styles.distanceCard}>
+        <h3 style={styles.cardTitle}>Total Distance & Time</h3>
+        <p style={styles.distance}>Distance: {totalDistance} km</p>
+        <p style={styles.distance}>Estimated Time: {totalTime}</p>
       </div>
 
       <div style={styles.placesCard}>
@@ -100,6 +106,13 @@ const styles = {
     marginBottom: '15px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
+  distanceCard: {
+    backgroundColor: '#d1c4e9', // Light purple color for distance card
+    borderRadius: '8px',
+    padding: '15px',
+    marginBottom: '15px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
   placesCard: {
     backgroundColor: '#fce4ec',
     borderRadius: '8px',
@@ -114,7 +127,11 @@ const styles = {
   },
   budget: {
     fontSize: '22px',
-    color: '#28a745',
+    color: "black",
+  },
+  distance: {
+    fontSize: '18px',
+    color: 'black', // Dark purple color for distance text
   },
   placesList: {
     listStyleType: 'none',

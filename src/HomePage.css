@@ -160,3 +160,7 @@ footer {
   bottom: 0; /* Stick to the bottom */
   width: 100%; /* Full width */
 }
+
+header{
+  background-color: #87CEEB;
+}

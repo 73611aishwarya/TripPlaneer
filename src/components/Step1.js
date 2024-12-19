@@ -5,28 +5,12 @@ import { LoadScript, Autocomplete } from '@react-google-maps/api';
 const Step1 = ({ onNext }) => {
   const [source, setSource] = React.useState('');
   const [destination, setDestination] = React.useState('');
-  const [distance, setDistance] = React.useState(0); // State for distance
   const [error, setError] = React.useState(''); // State for error message
   const [mapError, setMapError] = React.useState(''); // State for map loading error
 
   // Create refs for Autocomplete components
   const autocompleteSource = useRef(null);
   const autocompleteDestination = useRef(null);
-
-  // Simulated distance calculation function
-  const calculateDistance = (source, destination) => {
-    // For demonstration, we'll just return a fixed distance of 126 km
-    if (source && destination) {
-      return 126; // Fixed distance for demonstration
-    }
-    return 0;
-  };
-
-  // Update distance whenever source or destination changes
-  React.useEffect(() => {
-    const calculatedDistance = calculateDistance(source, destination);
-    setDistance(calculatedDistance);
-  }, [source, destination]);
 
   const handleNext = () => {
     // Check if source and destination are filled
@@ -35,7 +19,7 @@ const Step1 = ({ onNext }) => {
       return;
     }
     setError(''); // Clear error if validation passes
-    onNext({ source, destination, distance });
+    onNext({ source, destination });
   };
 
   return (
@@ -105,17 +89,6 @@ const Step1 = ({ onNext }) => {
             />
           </Autocomplete>
         </div>
-        <div style={styles.input}>
-          <label htmlFor="distance" className="form-label">Total Distance (km)</label>
-          <input
-            id="distance"
-            type="text"
-            className="form-control"
-            value={distance}
-            readOnly // Make the distance field read-only
-            style={styles.inputField}
-          />
-        </div>
         <button style={styles.button} onClick={handleNext}>Next</button>
       </div>
     </LoadScript>
@@ -127,7 +100,7 @@ const styles = {
     backgroundColor: '#e6f7ff', // Pastel pista color
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
+    padding: '30px', // Increased padding for better spacing
     margin: '20px auto',
     maxWidth: '600px',
   },
@@ -136,22 +109,25 @@ const styles = {
     marginBottom: '20px',
   },
   input: {
-    marginBottom: '15px',
+    marginBottom: '20px', // Increased margin for better spacing
   },
   inputField: {
     width: '100%',
+    height: '50px', // Increased height for better visibility
+    fontSize: '18px', // Increased font size for better visibility
   },
   button: {
     backgroundColor: '#007bff',
     color: 'white',
     border: 'none',
-    padding: '10px 15px',
+    padding: '15px 20px', // Increased padding for better visibility
     borderRadius: '5px',
     cursor: 'pointer',
     width: '100%',
+    fontSize: '18 px', // Increased font size for better visibility
   },
   alert: {
-    marginBottom: '15px',
+    marginBottom: '20px', // Increased margin for better spacing
   },
 };
 

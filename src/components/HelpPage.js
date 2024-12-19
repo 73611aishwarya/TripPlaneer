@@ -45,10 +45,7 @@ const HelpPage = () => {
 
   const styles = {
     page: {
-      backgroundImage: "url('/images/Help-BgPage.jpg')",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
+      backgroundColor: "#87CEEB", // Light sky blue color
       minHeight: "100vh",
       width: "100%",
       display: "flex",
@@ -64,11 +61,6 @@ const HelpPage = () => {
       borderRadius: "10px",
       boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
       fontFamily: "Arial, sans-serif",
-    },
-    logo: {
-      display: "block",
-      margin: "0 auto 20px",
-      maxWidth: "150px",
     },
     header: {
       textAlign: "center",
@@ -128,7 +120,7 @@ const HelpPage = () => {
     contactInfo: {
       textAlign: "center",
       marginTop: "10px",
-      fontSize: "16px",
+ fontSize: "16px",
       color: "#555",
     },
     footer: {
@@ -142,7 +134,6 @@ const HelpPage = () => {
   return (
     <div style={styles.page}>
       <div style={styles.container}>
-        <img src="/images/Help-Desk.png" alt="Help Page Logo" style={styles.logo} />
         <h1 style={styles.header}>Help Center</h1>
         <div style={styles.faqSection}>
           {faqData.map((faq, index) => (
