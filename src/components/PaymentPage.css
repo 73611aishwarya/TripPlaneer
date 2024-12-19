@@ -1,0 +1,141 @@
+/* PaymentPage.css */
+.payment-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7;
+  width: 100%;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.input-container {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.input-container label {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+}
+
+.input-container input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.payment-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.payment-option {
+  background-color: #007BFF;
+  color: white;
+  padding: 12px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.payment-option:hover {
+  background-color: #0056b3;
+}
+
+.payment-option.selected {
+  background-color: #28a745;
+}
+
+.total-amount {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.payment-status {
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.payment-status.success {
+  color: #28a745;
+}
+
+.payment-status.failure {
+  color: #e74c3c;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .payment-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .payment-option {
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+
+  .submit-button {
+    font-size: 1.1rem;
+  }
+}
