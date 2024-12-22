@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const Summary = ({ details, totalBudget = 15000, totalDistance = 126, totalTime = "2 hours", accommodation, onProceed, onBack }) => {
-  const [isDownloading, setIsDownloading] = useState(false); // State for download status
+  const [isDownloading, setIsDownloading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleDownload = () => {
     setIsDownloading(true);
-    // Simulate a download process
     setTimeout(() => {
       setIsDownloading(false);
-      alert("File has been downloaded!"); // Alert message after download
-    }, 2000); // Simulate a 2-second download time
+      alert("File has been downloaded!");
+    }, 2000);
   };
 
   const handleDirections = () => {
-    onProceed(); // Call the onProceed function to navigate to Directions
+    onProceed();
   };
 
   const handlePaymentInfo = () => {
-    alert("Payment information will be displayed here."); // Alert message for payment information
+    navigate('/paymentPage'); // Navigate to PaymentPage
   };
 
   return (
@@ -40,7 +41,7 @@ const Summary = ({ details, totalBudget = 15000, totalDistance = 126, totalTime 
 
       <div style={styles.budgetCard}>
         <h3 style={styles.cardTitle}>Total Budget</h3>
-        <p style={styles.budget}>₹15000</p>
+        <p style={styles.budget}>₹{totalBudget}</p>
       </div>
 
       <div style={styles.distanceCard}>
@@ -71,15 +72,15 @@ const styles = {
   downloadButton: {
     position: 'absolute',
     top: '10px',
-    right: '10px', // Changed to right side
+    right: '10px',
     padding: '8px 12px',
     fontSize: '14px',
-    backgroundColor: '#87CEEB', // Light sky blue color
+    backgroundColor: '#87CEEB',
     color: '#ffffff',
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
-    marginBottom: '20px', // Added margin to create space below the button
+    marginBottom: '20px',
   },
   downloadingMessage: {
     color: '#28a745',
@@ -97,7 +98,7 @@ const styles = {
     borderRadius: '8px',
     padding: '15px',
     marginBottom: '15px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Corrected line
   },
   budgetCard: {
     backgroundColor: '#e9f7ef',
@@ -107,7 +108,7 @@ const styles = {
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   },
   distanceCard: {
-    backgroundColor: '#d1c4e9', // Light purple color for distance card
+    backgroundColor: '#d1c4e9',
     borderRadius: '8px',
     padding: '15px',
     marginBottom: '15px',
@@ -131,7 +132,7 @@ const styles = {
   },
   distance: {
     fontSize: '18px',
-    color: 'black', // Dark purple color for distance text
+    color: 'black',
   },
   placesList: {
     listStyleType: 'none',
@@ -164,7 +165,7 @@ const styles = {
     width: '30%',
     padding: '8px',
     fontSize: '14px',
-    backgroundColor: '#808080', // Gray color for payment button
+    backgroundColor: '#808080',
     color: '#ffffff',
     border: 'none',
     borderRadius: '5px',

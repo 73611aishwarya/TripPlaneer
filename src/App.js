@@ -6,16 +6,17 @@ import LoginPage from './LoginPage';
 import ExplorePage from './ExplorePage';
 import RegisterPage from './RegisterPage';
 import ContactUsPage from './ContactUsPage';
-import Main from './components/main'; // Adjusted import path for Main component
-import Step1 from './components/Step1'; // Import Step1 component
-import Step2 from './components/Step2'; // Import Step2 component
-import Step3 from './components/Step3'; // Import Step3 component
-import Step4 from './components/Step4'; // Import Step4 component
-import Summary from './components/Summary'; // Import Summary component
-import Directions from './components/direction'; // Import Directions component
+import Main from './components/main';
+import Step1 from './components/Step1';
+import Step2 from './components/Step2';
+import Step3 from './components/Step3';
+import Step4 from './components/Step4';
+import Summary from './components/Summary';
+import Directions from './components/direction';
 import HelpPage from './components/HelpPage';
-import ForgotPassword from './ForgotPassword'; // Import ForgotPassword component
-import AboutUs from './AboutUs'; // Import AboutUs component
+import ForgotPassword from './ForgotPassword';
+import AboutUs from './AboutUs';
+import PaymentPage from './components/PaymentPage'; // Import PaymentPage
 
 const App = () => {
   return (
@@ -27,7 +28,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
-        <Route path="/aboutus" element={<AboutUs />} /> {/* Added About Us route */}
+        <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/main" element={<Main />} />
         <Route path="/step1" element={<StepWrapper step={1} />} />
         <Route path="/step2" element={<StepWrapper step={2} />} />
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/step4" element={<StepWrapper step={4} />} />
         <Route path="/summary" element={<SummaryWrapper />} />
         <Route path="/direction" element={<DirectionsWrapper />} />
+        <Route path="/paymentPage" element={<PaymentPage />} /> {/* Added PaymentPage route */}
         <Route path="/help" element={<HelpPage />} />
       </Routes>
     </Router>
@@ -51,7 +53,7 @@ const StepWrapper = ({ step }) => {
     if (step === 4) {
       navigate('/summary', { state: { details: { ...details, ...data }, totalBudget } });
     } else {
-      navigate(`/step${step + 1 }`);
+      navigate(`/ step${step + 1}`);
     }
   };
 

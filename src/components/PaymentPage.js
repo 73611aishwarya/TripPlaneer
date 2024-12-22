@@ -5,58 +5,59 @@ const PaymentPage = () => {
   const [basePrice] = useState(500);  // Set the base price as a fixed value (e.g., 500 INR)
   const [selectedPayment, setSelectedPayment] = useState('');
   const [totalAmount, setTotalAmount] = useState(basePrice);
-  const [paymentSuccess, setPaymentSuccess] = useState(null);
 
-  // Define the payment options and associated taxes
+  // Define the payment options
   const paymentOptions = [
-    { name: 'Credit Card', tax: 0.05 },
-    { name: 'PhonePay', tax: 0.03 },
-    { name: 'Bank Transfer', tax: 0.07 },
-    { name: 'Mobile Payment', tax: 0.04 },
+    { name: 'Credit Card', image: require('./creditcard.avif') }, // Adjust path as needed
+    { name: 'PhonePay', image: require('./phonepe.png') }, // Adjust path as needed
+    { name: 'Bank Transfer', image: require('./bank.png') }, // Adjust path as needed
+    { name: 'Mobile Payment', image: require('./mobilepe.avif') }, // Adjust path as needed
   ];
 
   // Handle payment option change
   const handlePaymentChange = (paymentOption) => {
     setSelectedPayment(paymentOption);
-    if (paymentOption === 'Cash') {
-      setTotalAmount(basePrice);  // No tax for Cash payment
-    } else {
-      const tax = paymentOptions.find(option => option.name === paymentOption).tax;
-      setTotalAmount(basePrice * (1 + tax));  // Apply tax based on the selected option
-    }
+    setTotalAmount(basePrice);  // Assuming no tax for simplicity
   };
 
-  // Handle form submission
-  const handleSubmit = () => {
-    if (selectedPayment) {
-      setPaymentSuccess(true);
-    } else {
-      setPaymentSuccess(false);
-    }
+  // Function to handle Logout
+  const handleLogout = () => {
+    console.log('User  logged out');
+  };
+
+  // Function to handle Details
+  const handleDetails = () => {
+    console.log('Navigating to details page');
+  };
+
+  // Function to handle Ticket Booking
+  const handleTicketBooking = () => {
+    console.log('Booking ticket');
   };
 
   return (
     <div className="payment-container">
-      <h1>Payment Details</h1>
+      <h1>Select Payment Option</h1>
 
-      {/* Display payment options */}
-      <h2>Select Payment Option</h2>
+      {/* Display payment options as image cards */}
       <div className="payment-options">
         {paymentOptions.map((option, index) => (
-          <button
+          <div
             key={index}
             onClick={() => handlePaymentChange(option.name)}
             className={`payment-option ${selectedPayment === option.name ? 'selected' : ''}`}
           >
-            {option.name} (Tax: {option.tax * 100}%)
-          </button>
+            <img src={option.image} alt={option.name} className="payment-image" />
+            <p>{option.name}</p>
+          </div>
         ))}
-        <button
+        <div
           onClick={() => handlePaymentChange('Cash')}
           className={`payment-option ${selectedPayment === 'Cash' ? 'selected' : ''}`}
         >
-          Cash (No Tax)
-        </button>
+          <img src={require('./cash.jpg')} alt="Cash" className="payment-image" />
+          <p>Cash</p>
+        </div>
       </div>
 
       {/* Show the selected payment method */}
@@ -71,21 +72,12 @@ const PaymentPage = () => {
         <h3>Total Amount: ₹{totalAmount.toFixed(2)}</h3>
       </div>
 
-      {/* Submit Button */}
-      <button
-        onClick={handleSubmit}
-        className={`submit-button ${selectedPayment ? '' : 'disabled'}`}
-        disabled={!selectedPayment}
-      >
-        Submit Payment
-      </button>
-
-      {/* Display success/failure message */}
-      {paymentSuccess !== null && (
-        <div className={`payment-status ${paymentSuccess ? 'success' : 'failure'}`}>
-          {paymentSuccess ? 'Payment Successful!' : 'Please select a payment method.'}
-        </div>
-      )}
+      {/* Action Buttons */}
+      <div className="action-buttons">
+        <button onClick={handleLogout}>Logout</button>
+        <button className="gray-button" onClick={handleDetails}>Details</button>
+        <button onClick={handleTicketBooking}>Ticket Booking</button>
+      </div>
     </div>
   );
 };
