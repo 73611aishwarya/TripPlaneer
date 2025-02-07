@@ -12,7 +12,7 @@ import Step2 from './components/Step2';
 import Step3 from './components/Step3';
 import Step4 from './components/Step4';
 import Summary from './components/Summary';
-import Directions from './components/direction';
+import Directions from './components/direction'; // Ensure the correct import
 import HelpPage from './components/HelpPage';
 import ForgotPassword from './ForgotPassword';
 import AboutUs from './AboutUs';
@@ -53,7 +53,7 @@ const StepWrapper = ({ step }) => {
     if (step === 4) {
       navigate('/summary', { state: { details: { ...details, ...data }, totalBudget } });
     } else {
-      navigate(`/ step${step + 1}`);
+      navigate(`/step${step + 1}`); // Fixed the path here
     }
   };
 
