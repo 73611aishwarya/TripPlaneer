@@ -6,152 +6,53 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true); // Set loading state
+    setIsSubmitting(true);
+    setError('');
 
-    // Simulate a login request (you can replace this with actual logic)
-    setTimeout(() => {
-      // Simulate a successful login after 1 second
-      setIsSubmitting(false); // Reset loading state
-      navigate('/main'); // Redirect to the main page after login
-    }, 1000);
+    try {
+      const response = await fetch('http://tripplanner1.ap-south-1.elasticbeanstalk.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json(); // ✅ Correct way to get response JSON
+
+      console.log("Full Response:", data); // ✅ Debugging ke liye full response print karo
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      // ✅ Token ya user details store karo
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.userId); // 🔥 If userId is returned
+      
+      navigate('/main');
+    } catch (err) {
+      console.error("Login Error:", err.message); // ✅ Console pe error show karo
+      setError(err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="login-page">
-      <style>
-        {`
-          @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-
-          * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-          }
-
-          body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #87CEEB; /* Light sky blue background */
-          }
-
-          .login-page {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: white; /* White card background */
-            color: #223243; /* Text color */
-            padding: 40px;
-            border-radius: 20px;
-            width: 650px; /* Increased width for the card */
-            height: 400px; /* Increased height for the card */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Card shadow */
-            animation: fadeIn 0.5s ease-in-out; /* Animation for card */
-            margin-top: 50px; /* Increased gap between card and heading */
-          }
-
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-              transform: translateY(-20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          h2 {
-            color: #223243;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            margin-bottom: 70px; /* Increased gap between heading and card */
-          }
-
-          form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-          }
-
-          .form-group {
-            display: flex;
-            flex-direction: column;
-          }
-
-          .form-group label {
-            margin-bottom: 5px;
-          }
-
-          .form-group input {
-            padding: 12px;
-            border: none;
-            border-radius: 25px;
-            background: #f0f0f0; /* Light gray background for inputs */
-            color: #223243;
-            font-weight: 300;
-            font-size: 1em;
-            box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.1),
-              5px 5px 15px rgba(0, 0, 0, 0.35);
-            transition: 0.5s;
-            outline: none;
-          }
-
-          .form-group input:focus {
-            border: 1px solid #00dfc4;
-          }
-
-          button {
-            background: #00dfc4;
-            color: #223243;
-            padding: 10px 0;
-            font-weight: 500;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.1),
-              5px 5px 15px rgba(0, 0, 0, 0.35);
-          }
-
-          p {
-            color: rgba(34, 34, 34, 0.7);
-            font-size: 0.75em;
-            margin-top: 30px; /* Increased gap between card and links */
-          }
-
-          p a {
-            color: #00dfc4;
-            text-decoration: underline;
-          }
-        `}
-      </style>
-
       <h2>Login</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email:</label>
-          <input type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
         <div className="form-group">
           <label>Password:</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Logging in...' : 'Enter'}

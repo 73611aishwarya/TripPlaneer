@@ -9,6 +9,8 @@ function ContactUsPage() {
     message: ''
   });
 
+  const [loading, setLoading] = useState(false); // API Loading State
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -17,12 +19,40 @@ function ContactUsPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Normally here you would send the form data to a backend or API
-    console.log('Form submitted:', formData);
-    alert('Your message has been sent!');
+    setLoading(true);
+  
+    const contactData = {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      sentAt: new Date().toISOString() // Correct date format
+    };
+  
+    try {
+      const response = await fetch("http://tripplanner1.ap-south-1.elasticbeanstalk.com/api/Contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "*/*"
+        },
+        body: JSON.stringify(contactData)
+      });
+  
+      if (!response.ok) throw new Error("Failed to send message");
+  
+      alert("Your message has been sent successfully!");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error sending message, please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   return (
     <div className="contact-us-page">
@@ -42,7 +72,6 @@ function ContactUsPage() {
         </nav>
       </header>
 
-      {/* Contact Form Section */}
       <main className="contact-form">
         <h2>Contact Us</h2>
         <form onSubmit={handleSubmit}>
@@ -89,11 +118,12 @@ function ContactUsPage() {
               required
             />
           </div>
-          <button type="submit">Send Message</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Sending...' : 'Send Message'}
+          </button>
         </form>
       </main>
 
-      {/* Footer Section */}
       <footer>
         <p>© 2024 Travel Planner. All rights reserved.</p>
       </footer>

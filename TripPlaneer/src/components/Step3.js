@@ -1,75 +1,64 @@
-import React from 'react';
-import trainImage from './train1.jpg'; 
-import busImage from './bus.jpg'; 
+import React, { useState } from 'react';
+import trainImage from './train1.jpg';
+import busImage from './bus.jpg';
 import carImage from './car.jpg';
-import bikeImage from './bike.jpg';  
+import bikeImage from './bike.jpg';
 
-const Step3 = ({ onNext, onBack }) => {
-  const [travelOption, setTravelOption] = React.useState('');
-  const [subOption, setSubOption] = React.useState('');
-  const [quote, setQuote] = React.useState('');
+const Step3 = ({ onBack, onNext }) => {
+  const [modeOfTransport, setModeOfTransport] = useState('');
+  const [subCategory, setSubCategory] = useState('');
 
   const options = [
     { name: 'Bus', image: busImage, subOptions: ['AC Sitter', 'Non-AC Sitter', 'Non-AC Sleeper', 'AC Sleeper'] },
-    { name: 'Train', image: trainImage, subOptions: ['AC', 'RAC', '2AC', 'Sitter'] }, // Use imported image
-    { name: 'Car', image:  carImage, subOptions: ['Private Car', 'Rental Car'] },
+    { name: 'Train', image: trainImage, subOptions: ['AC', 'RAC', '2AC', 'Sitter'] },
+    { name: 'Car', image: carImage, subOptions: ['Private Car', 'Rental Car'] },
     { name: 'Bike', image: bikeImage, subOptions: ['Standard', 'Sport'] },
   ];
 
   const handleSelect = (option) => {
-    setTravelOption(option);
-    setSubOption(''); // Reset sub-option when travel option changes
-    setQuote(''); // Reset quote when travel option changes
+    setModeOfTransport(option);
+    setSubCategory('');
   };
 
   const handleSubSelect = (subOption) => {
-    setSubOption(subOption);
-    setQuote(`You have selected ${subOption} for ${travelOption}.`); // Set quote based on selection
+    setSubCategory(subOption);
   };
 
   const handleNext = () => {
-    if (!travelOption || !subOption) {
-      alert("Please select a travel option and a sub-option."); // Alert if no option is selected
+    if (!modeOfTransport || !subCategory) {
+      alert('Please select a mode of transport and a sub-category.');
       return;
     }
-    onNext({ travelOption, subOption }); // Pass the selected options as an object
+    onNext({ modeOfTransport, subCategory });
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Step 3: Select Way of Travel</h2>
+      <h2 style={styles.heading}>Step 3: <span style={styles.headingAccent}>Select Way of Travel</span></h2>
       <div style={styles.optionsContainer}>
-        {options.map(option => (
+        {options.map((option) => (
           <div
             key={option.name}
             style={{
               ...styles.option,
-              backgroundColor: travelOption === option.name ? '#007bff' : '#f8f9fa',
-              color: travelOption === option.name ? '#ffffff' : '#000000',
+              backgroundColor: modeOfTransport === option.name ? '#007bff' : '#f8f9fa',
+              color: modeOfTransport === option.name ? '#ffffff' : '#000000',
             }}
             onClick={() => handleSelect(option.name)}
           >
-            <div style={styles.imageContainer}>
-              <img src={option.image} alt={option.name} style={styles.image} />
-              <div style={styles.optionText}>{option.name}</div>
-            </div>
+            <img src={option.image} alt={option.name} style={styles.image} />
+            <div style={styles.optionText}>{option.name}</div>
           </div>
         ))}
       </div>
-      {travelOption && (
-        <div style={styles.subOptionsHeader}>
-          <h3 style={styles.subOptionsTitle}>Choose from the below options:</h3>
-        </div>
-      )}
-      {travelOption && (
+      {modeOfTransport && (
         <div style={styles.subOptionsContainer}>
-          {options.find(option => option.name === travelOption).subOptions.map(sub => (
+          {options.find((option) => option.name === modeOfTransport).subOptions.map((sub) => (
             <div
               key={sub}
               style={{
                 ...styles.subOption,
-                backgroundColor: subOption === sub ? '#ffcc99' : '#f8f9fa', // Light orange for selected sub-option
-                color: subOption === sub ? '#000000' : '#000000',
+                backgroundColor: subCategory === sub ? '#ffcc99' : '#f8f9fa',
               }}
               onClick={() => handleSubSelect(sub)}
             >
@@ -78,10 +67,11 @@ const Step3 = ({ onNext, onBack }) => {
           ))}
         </div>
       )}
-      {quote && <div style={styles.quote}>{quote}</div>}
       <div style={styles.buttonContainer}>
         <button style={styles.backButton} onClick={onBack}>Back</button>
-        <button style={styles.button} onClick={handleNext} disabled={!travelOption || !subOption}>Next</button>
+        <button style={styles.button} onClick={handleNext} disabled={!modeOfTransport || !subCategory}>
+          Next
+        </button>
       </div>
     </div>
   );
@@ -90,114 +80,86 @@ const Step3 = ({ onNext, onBack }) => {
 const styles = {
   container: {
     backgroundColor: '#e6f7ff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '40px', // Increased padding
+    padding: '40px',
+    borderRadius: '12px',
+    maxWidth: '900px',
     margin: '20px auto',
-    maxWidth: '900px', // Increased max width
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
-  title: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '20px',
+  heading: {
     textAlign: 'center',
+    color: '#007bff',
+    fontSize: '2rem',
+    marginBottom: '15px',
+    fontWeight: 'bold',
+  },
+  headingAccent: {
+    fontFamily: "'Poppins', sans-serif",
+    fontSize: '2.2rem',
+    color: '#0056b3',
   },
   optionsContainer: {
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     gap: '20px',
-    marginBottom: '20px',
+    width: '100%',
   },
   option: {
     padding: '15px',
-    borderRadius: '5px',
+    borderRadius: '8px',
     cursor: 'pointer',
     textAlign: 'center',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
-    height: '180px',
-    width: '100%',
-    position: 'relative',
-    transition: 'background-color 0.3s ease',
-  },
-  imageContainer: {
-    position: 'relative',
-    height: '100%',
+    transition: 'transform 0.2s ease-in-out',
   },
   image: {
     width: '100%',
-    height: '100%',
     borderRadius: '5px',
-    objectFit: 'cover',
-  },
-  optionText: {
-    position: 'absolute',
-    bottom: '10px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    fontSize: '18px',
-    color: '#ffffff',
-    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.7)',
   },
   subOptionsContainer: {
     display: 'flex',
     flexDirection: 'column',
     marginTop: '20px',
-    marginBottom: '20px', // Added margin for gap between buttons and sub-options
-  },
-  subOptionsHeader: {
-    marginTop: '20px',
-    textAlign: 'center',
-  },
-  subOptionsTitle: {
-    fontSize: '20px',
-    fontWeight: 'bold',
+    width: '100%',
   },
   subOption: {
     padding: '10px',
     borderRadius: '5px',
     cursor: 'pointer',
     textAlign: 'center',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     margin: '5px 0',
-    transition: 'background-color 0.3s ease',
-  },
-  quote: {
-    marginTop: '15px',
-    fontSize: '16px',
-    fontStyle: 'italic',
-    textAlign: 'center',
-    color: '#333',
-  },
-  button: {
-    width: '40%',
-    padding: '10px',
-    fontSize: '14px',
-    backgroundColor: '#007bff',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    margin: '0 5%',
-  },
-  backButton: {
-    width: '40%',
-    padding: '10px',
-    fontSize: '14px',
-    backgroundColor: '#6c757d',
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    margin: '0 5%',
+    transition: 'background-color 0.2s ease-in-out',
   },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginTop: '20px',
+    width: '100%',
   },
-  warning: {
-    color: 'red',
-    textAlign: 'center',
-    margin: '10px 0',
+  button: {
+    width: '40%',
+    padding: '12px',
+    backgroundColor: '#007bff',
+    color: '#ffffff',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    border: 'none',
+    fontSize: '1rem',
+    transition: 'background-color 0.3s ease',
+  },
+  backButton: {
+    width: '40%',
+    padding: '12px',
+    backgroundColor: '#6c757d',
+    color: '#ffffff',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    border: 'none',
+    fontSize: '1rem',
+    transition: 'background-color 0.3s ease',
   },
 };
 

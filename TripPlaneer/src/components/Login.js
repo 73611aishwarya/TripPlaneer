@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // For redirection
+import axios from "axios";
 import "./Login.css"; // Optional: For styling
 
 const Login = () => {
@@ -7,8 +9,10 @@ const Login = () => {
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate(); // For navigation after login
 
+  // Handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -16,22 +20,31 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const { email, password } = formData;
-
-    if (!email || !password) {
-      setError("Please fill in all fields!");
-    } else {
-      setError("");
-      console.log("Login successful:", formData);
-      // Integrate with backend API here
+    setMessage("");
+  
+    try {
+      const response = await axios.post("https://localhost:44345/api/auth/login", formData);
+      
+     console.log("Login Response:", response.data); // ✅ Debugging ke liye response print karo
+      
+      setMessage("Login successful! Redirecting...");
+      setTimeout(() => navigate("/dashboard"), 2000);
+      
+    } catch (error) {
+      console.error("Login Error:", error.response); // ✅ Error ka pura response dekho
+      setMessage(error.response?.data?.message || "Login failed! Please check your credentials.");
     }
   };
-
+  
   return (
     <div className="login-container">
       <h2>Login</h2>
+      
+      {message && <p className="message">{message}</p>}
+      
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -45,6 +58,7 @@ const Login = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="password">Password:</label>
           <input
@@ -57,11 +71,13 @@ const Login = () => {
             required
           />
         </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="login-btn">
-          xyzfrhjd
-        </button>
+
+        <button type="submit" className="login-btn">Login</button>
       </form>
+
+      <p className="register-link">
+        Don't have an account? <a href="/register">Sign up</a>
+      </p>
     </div>
   );
 };

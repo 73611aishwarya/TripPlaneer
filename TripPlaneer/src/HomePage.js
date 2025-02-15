@@ -46,7 +46,7 @@ function HomePage() {
         <div className="hero-buttons"> {/* Added a div to wrap the buttons */}
           <button className="explore-button" onClick={handleStartExploring}>
             <Link to="/explore" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Our Services
+              Popular Destinations
             </Link>
           </button>
           <button className="login-button">

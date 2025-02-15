@@ -1,141 +1,120 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+import React from "react";
 
-const Step2 = ({ onNext, onBack }) => {
-  const [people, setPeople] = React.useState(''); // State for number of people
-  const [days, setDays] = React.useState(''); // State for number of days
-  const [error, setError] = React.useState(''); // State for error message
+const Step2 = ({ travelData = {}, onNext, onPrevious }) => {
+  console.log("Travel Data in Step2:", travelData);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Convert the value to a number if the input name is 'people' or 'days'
+    const newValue = name === "people" || name === "days" ? parseInt(value, 10) : value;
+    const newData = { ...travelData, [name]: newValue };
+    onNext(newData, false);
+  };
 
   const handleNext = () => {
-    if (!people || !days) {
-      setError("Both fields are required and must be filled out."); // Set error message
+    if (!travelData.people || !travelData.days) {
+      alert("Please fill in all fields!");
       return;
     }
-    setError(''); // Clear error if validation passes
-    onNext({ numberOfPeople: parseInt(people, 10), numberOfDays: parseInt(days, 10) }); // Pass values as integers
+    // Check if people or days are zero
+    if (travelData.people <= 0 || travelData.days <= 0) {
+      alert("Number of People and Number of Days can't be zero or negative!");
+      return;
+    }
+    onNext(travelData, true);
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Step 2: Enter Travel Details</h2>
-      
-      {error && (
-        <div className="alert alert-danger" role="alert" style={styles.alert}>
-          {error}
-        </div>
-      )}
-      
-      <div style={styles.input}>
-        <label htmlFor="people" className="form-label">
-          Number of People
-        </label>
-        <input
-          id="people"
-          type="number"
-          className="form-control"
-          value={people}
-          onChange={(e) => setPeople(e.target.value)}
-          placeholder="Enter number of people"
-          style={styles.inputField}
-        />
-      </div>
-      <div style={styles.input}>
-        <label htmlFor="days" className="form-label">
-          Number of Days
-        </label>
-        <input
-          id="days"
-          type="number"
-          className="form-control"
-          value={days}
-          onChange={(e) => setDays(e.target.value)}
-          placeholder="Enter number of days"
-          style={styles.inputField}
-        />
-      </div>
-      
+      <h2 style={styles.heading}>Step 2: <span style={styles.headingAccent}>Travel Details</span></h2>
+
+      <label style={styles.label}>Number of People:</label>
+      <input
+        type="number"
+        name="people"
+        placeholder="Enter Number of People"
+        value={travelData.people || ""}
+        onChange={handleChange}
+        style={styles.input}
+      />
+
+      <label style={styles.label}>Number of Days:</label>
+      <input
+        type="number"
+        name="days"
+        placeholder="Enter Number of Days"
+        value={travelData.days || ""}
+        onChange={handleChange}
+        style={styles.input}
+      />
+
       <div style={styles.buttonContainer}>
-        <button style={styles.backButton} onClick={onBack}>Back</button>
-        <button style={styles.nextButton} onClick={handleNext}>Next</button>
+        <button onClick={onPrevious} style={styles.button}>Previous</button>
+        <button onClick={handleNext} style={styles.button}>Next</button>
       </div>
     </div>
   );
 };
 
+Step2.defaultProps = {
+  travelData: {
+    people: "",
+    days: "",
+  },
+};
+
 const styles = {
   container: {
-    backgroundColor: '#e6f7ff',
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '40px', // Increased padding
-    margin: '20px auto',
-    maxWidth: '600px',
-    transition: 'transform 0.3s ease', // Animation for the container
+    padding: "20px",
+    backgroundColor: "#f8f9fa",
+    borderRadius: "12px",
+    maxWidth: "500px",
+    margin: "auto",
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    flexDirection: "column",
   },
-  title: {
-    fontSize: '32px', // Increased font size
-    fontWeight: 'bold',
-    marginBottom: '30px', // Increased margin
-    textAlign: 'center',
+  heading: {
+    textAlign: "center",
+    color: "#007bff",
+    fontSize: "2rem",
+    marginBottom: "15px",
+    fontWeight: "bold",
+  },
+  headingAccent: {
+    fontFamily: "'Poppins', sans-serif",
+    fontSize: "2.2rem",
+    color: "#0056b3",
+  },
+  label: {
+    fontSize: "1rem",
+    fontWeight: "bold",
+    marginBottom: "5px",
+    color: "#333",
   },
   input: {
-    marginBottom: '25px', // Increased margin
-  },
-  inputField: {
-    fontSize: '18px', // Increased font size
-    padding: '12px', // Increased padding
-    width: '100%',
-    border: '1px solid #ced4da',
-    borderRadius: '4px',
-    boxSizing: 'border-box',
-    transition: 'border-color 0.3s, box-shadow 0.3s', // Animation for input fields
-  },
-  alert: {
-    marginBottom: '20px',
-    fontSize: '16px', // Increased font size for alert
+    width: "100%",
+    padding: "10px",
+    marginBottom: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    fontSize: "1rem",
   },
   buttonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: '30px', // Increased margin
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "20px",
   },
-  backButton: {
-    width: '48%', // Adjust width for spacing
-    padding: '15px', // Increased padding
-    fontSize: '20px', // Increased font size
-    backgroundColor: '#6c757d', // Bootstrap secondary color
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s, transform 0.2s', // Animation for button
-  },
-  nextButton: {
-    width: '48%', // Adjust width for spacing
-    padding: '15px', // Increased padding
-    fontSize: '20px', // Increased font size
-    backgroundColor: '#007bff', // Bootstrap primary color
-    color: '#ffffff',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s, transform 0.2s', // Animation for button
-  },
-};
-
-// Add hover effect for buttons
-const buttonHoverStyle = {
-  ':hover': {
-    backgroundColor: '#0056b3', // Darker shade for next button
-    transform: 'scale(1.05)', // Slightly enlarge button on hover
-  },
-};
-
-// Add focus effect for input fields
-const inputFocusStyle = {
-  ':focus': {
-    borderColor: '#007bff',
-    boxShadow: '0 0 5px rgba(0, 123, 255, 0.5)', // Blue shadow on focus
+  button: {
+    backgroundColor: "#007bff",
+    color: "white",
+    padding: "12px 20px",
+    fontSize: "1.1rem",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    textAlign: "center",
   },
 };
 

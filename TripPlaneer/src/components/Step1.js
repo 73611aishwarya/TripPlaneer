@@ -1,133 +1,190 @@
-import React, { useRef } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
-import { LoadScript, Autocomplete } from '@react-google-maps/api';
+import React, { useState, useEffect, useRef } from "react";
 
 const Step1 = ({ onNext }) => {
-  const [source, setSource] = React.useState('');
-  const [destination, setDestination] = React.useState('');
-  const [error, setError] = React.useState(''); // State for error message
-  const [mapError, setMapError] = React.useState(''); // State for map loading error
+  const [formData, setFormData] = useState({
+    source: "",
+    destination: "",
+    startDate: "",
+    endDate: "",
+    distance: "",
+  });
 
-  // Create refs for Autocomplete components
-  const autocompleteSource = useRef(null);
-  const autocompleteDestination = useRef(null);
+  const sourceRef = useRef(null);
+  const destinationRef = useRef(null);
+
+  useEffect(() => {
+    if (!window.google) return;
+
+    const options = { types: ["geocode"] };
+
+    const sourceAutocomplete = new window.google.maps.places.Autocomplete(sourceRef.current, options);
+    sourceAutocomplete.addListener("place_changed", () => {
+      const place = sourceAutocomplete.getPlace();
+      const sourceAddress = place.formatted_address || place.name;
+      setFormData((prev) => ({ ...prev, source: sourceAddress }));
+    });
+
+    const destinationAutocomplete = new window.google.maps.places.Autocomplete(destinationRef.current, options);
+    destinationAutocomplete.addListener("place_changed", () => {
+      const place = destinationAutocomplete.getPlace();
+      const destinationAddress = place.formatted_address || place.name;
+      setFormData((prev) => ({ ...prev, destination: destinationAddress }));
+    });
+  }, []);
+
+  useEffect(() => {
+    if (formData.source && formData.destination) {
+      calculateDistance(formData.source, formData.destination);
+    }
+  }, [formData.source, formData.destination]);
+
+  const calculateDistance = (source, destination) => {
+    if (!source || !destination || !window.google) return;
+
+    const service = new window.google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [source],
+        destinations: [destination],
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      },
+      (response, status) => {
+        if (status === "OK" && response.rows.length > 0) {
+          const distanceText = response.rows[0].elements[0].distance?.text || "";
+          setFormData((prev) => ({ ...prev, distance: distanceText }));
+        } else {
+          console.error("Error fetching distance:", status);
+        }
+      }
+    );
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleNext = () => {
-    // Check if source and destination are filled
-    if (!source || !destination) {
-      setError("Both Source and Destination fields are required."); // Set error message
+    const currentDate = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+
+    if (!formData.source || !formData.destination || !formData.startDate || !formData.endDate || !formData.distance) {
+      alert("Please fill in all fields (Source, Destination, Start Date, End Date, and Distance)!");
       return;
     }
-    setError(''); // Clear error if validation passes
-    onNext({ source, destination });
+
+    // Validate start date
+    if (formData.startDate < currentDate) {
+      alert("Start Date cannot be before today's date!");
+      return;
+    }
+
+    // Validate end date
+    if (formData.endDate < formData.startDate) {
+      alert("End Date must be after the Start Date!");
+      return;
+    }
+
+    onNext(formData);
   };
 
   return (
-    <LoadScript
-      googleMapsApiKey="AIzaSyBIeYEetesE15bOgXFVfibBWCyheA0yJNs" // Your API key here
-      onError={() => setMapError("Failed to load Google Maps. Please check your API key and billing status.")}
-      libraries={['places']}
-    >
-      <div style={styles.container}>
-        <h2 style={styles.title}>Step 1: Enter Travel Details</h2>
-        
-        {mapError && (
-          <div className="alert alert-danger" role="alert" style={styles.alert}>
-            {mapError}
-          </div>
-        )}
-        
-        {error && (
-          <div className="alert alert-danger" role="alert" style={styles.alert}>
-            {error}
-          </div>
-        )}
-        
-        <div style={styles.input}>
-          <label htmlFor="source" className="form-label">Source</label>
-          <Autocomplete
-            onLoad={autocomplete => (autocompleteSource.current = autocomplete)}
-            onPlaceChanged={() => {
-              const place = autocompleteSource.current.getPlace();
-              if (place && place.formatted_address) {
-                setSource(place.formatted_address);
-              } else {
-                setError("Please select a valid source location.");
-              }
-            }}
-          >
-            <input
-              id="source"
-              type="text"
-              className="form-control"
-              placeholder="Enter source location"
-              style={styles.inputField}
-              aria-label="Source location"
-            />
-          </Autocomplete>
-        </div>
-        <div style={styles.input}>
-          <label htmlFor="destination" className="form-label">Destination</label>
-          <Autocomplete
-            onLoad={autocomplete => (autocompleteDestination.current = autocomplete)}
-            onPlaceChanged={() => {
-              const place = autocompleteDestination.current.getPlace();
-              if (place && place.formatted_address) {
-                setDestination(place.formatted_address);
-              } else {
-                setError("Please select a valid destination location.");
-              }
-            }}
-          >
-            <input
-              id="destination"
-              type="text"
-              className="form-control"
-              placeholder="Enter destination location"
-              style={styles.inputField}
-              aria-label="Destination location"
-            />
-          </Autocomplete>
-        </div>
-        <button style={styles.button} onClick={handleNext}>Next</button>
-      </div>
-    </LoadScript>
+    <div style={styles.container}>
+      <h2 style={styles.heading}>Step 1: <span style={styles.headingAccent}>Enter Travel Details</span></h2>
+
+      <label style={styles.label}>Source:</label>
+      <input type="text" ref={sourceRef} placeholder="Enter Source Location" style={styles.input} />
+
+      <label style={styles.label}>Destination:</label>
+      <input type="text" ref={destinationRef} placeholder="Enter Destination" style={styles.input} />
+
+      <label style={styles.label}>Start Date:</label>
+      <input
+        type="date"
+        name="startDate"
+        value={formData.startDate}
+        onChange={handleChange}
+        style={styles.input}
+        min={new Date().toISOString().split("T")[0]} // Set minimum value as today's date
+      />
+
+      <label style={styles.label}>End Date:</label>
+      <input
+        type="date"
+        name="endDate"
+        value={formData.endDate}
+        onChange={handleChange}
+        style={styles.input}
+        min={formData.startDate || new Date().toISOString().split("T")[0]} // Set minimum value as start date or today's date
+      />
+
+      <label style={styles.label}>Distance:</label>
+      <input type="text" value={formData.distance} readOnly placeholder="Distance will be calculated" style={styles.inputDisabled} />
+
+      <button onClick={handleNext} style={styles.button}>Next</button>
+    </div>
   );
 };
 
 const styles = {
   container: {
-    backgroundColor: '#e6f7ff', // Pastel pista color
-    borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    padding: '30px', // Increased padding for better spacing
-    margin: '20px auto',
-    maxWidth: '600px',
+    padding: "20px",
+    backgroundColor: "#f8f9fa",
+    borderRadius: "12px",
+    maxWidth: "500px",
+    margin: "auto",
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    flexDirection: "column",
   },
-  title: {
-    textAlign: 'center',
-    marginBottom: '20px',
+  heading: {
+    textAlign: "center",
+    color: "#007bff",
+    fontSize: "2rem",
+    marginBottom: "15px",
+    fontWeight: "bold",
+  },
+  headingAccent: {
+    fontFamily: "'Poppins', sans-serif",
+    fontSize: "2.2rem",
+    color: "#0056b3",
+  },
+  label: {
+    fontSize: "1rem",
+    fontWeight: "bold",
+    marginBottom: "5px",
+    color: "#333",
   },
   input: {
-    marginBottom: '20px', // Increased margin for better spacing
+    width: "100%",
+    padding: "10px",
+    marginBottom: "10px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+    fontSize: "1rem",
   },
-  inputField: {
-    width: '100%',
-    height: '50px', // Increased height for better visibility
-    fontSize: '18px', // Increased font size for better visibility
+  inputDisabled: {
+    width: "100%",
+    padding: "10px",
+    marginBottom: "10px",
+    border: "1px solid #ddd",
+    borderRadius: "5px",
+    fontSize: "1rem",
+    backgroundColor: "#e9ecef",
+    color: "#6c757d",
   },
   button: {
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    padding: '15px 20px', // Increased padding for better visibility
-    borderRadius: '5px',
-    cursor: 'pointer',
-    width: '100%',
-    fontSize: '18 px', // Increased font size for better visibility
+    backgroundColor: "#007bff",
+    color: "white",
+    padding: "12px 20px",
+    fontSize: "1.1rem",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    textAlign: "center",
   },
-  alert: {
-    marginBottom: '20px', // Increased margin for better spacing
+  buttonHover: {
+    backgroundColor: "#0056b3",
   },
 };
 

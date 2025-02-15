@@ -12,7 +12,7 @@ const Main = () => {
   ];
 
   const handleBeginTour = () => {
-    navigate('/step1');
+    navigate('/travel-planner');
   };
 
   useEffect(() => {
@@ -49,25 +49,22 @@ const Main = () => {
         </div>
       </div>
       <div style={styles.offersContainer}>
-        <div style={styles.offerCard}>
-          <h3>Offer 1</h3>
-          <p>Get 20% off on your first trip booking!</p>
-          <p>Book now and enjoy a memorable experience with us.</p>
-        </div>
-        <div style={styles.offerCard}>
-          <h3>Offer 2</h3>
-          <p>Book now and get a free travel guide!</p>
-          <p>Explore hidden gems and local favorites with our guide.</p>
-        </div>
-        <div style={styles.offerCard}>
-          <h3>Offer 3</h3>
-          <p>Refer a friend and earn travel credits!</p>
-          <p>Share the joy of travel and earn rewards together.</p>
-        </div>
+        {offerData.map((offer, index) => (
+          <div key={index} style={styles.offerCard}>
+            <h3>{offer.title}</h3>
+            <p>{offer.description}</p>
+          </div>
+        ))}
       </div>
     </Layout>
   );
 };
+
+const offerData = [
+  { title: "Offer 1", description: "Get 20% off on your first trip booking! Book now and enjoy a memorable experience with us." },
+  { title: "Offer 2", description: "Book now and get a free travel guide! Explore hidden gems and local favorites with our guide." },
+  { title: "Offer 3", description: "Refer a friend and earn travel credits! Share the joy of travel and earn rewards together." }
+];
 
 const styles = {
   contentContainer: {
@@ -112,19 +109,26 @@ const styles = {
   },
   offersContainer: {
     display: 'flex',
-    justifyContent: 'space-around',
-    padding: '20px',
+    justifyContent: 'center',
+    gap: '20px',
+    padding: '40px',
+    flexWrap: 'wrap',
   },
   offerCard: {
     background: '#ffffff',
     color: '#000',
     padding: '30px',
-    borderRadius: '10px',
+    borderRadius: '15px',
     flex: '1',
-    margin: '0 10px',
+    minWidth: '280px',
     textAlign: 'center',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-    transition: 'transform 0.3s',
+    transition: 'transform 0.3s, box-shadow 0.3s',
+    cursor: 'pointer',
+  },
+  offerCardHover: {
+    transform: 'scale(1.05)',
+    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.3)',
   },
   button: {
     backgroundColor: '#0056b3',
@@ -135,8 +139,6 @@ const styles = {
     borderRadius: '5px',
     cursor: 'pointer',
     transition: 'transform 0.3s, background-color 0.3s',
-    position: 'relative',
-    overflow: 'hidden',
     marginTop: '20px',
   },
   buttonText: {

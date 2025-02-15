@@ -23,7 +23,7 @@ function ExplorePage() {
 
   return (
     <div className="explore-page">
-      <h1>Our Services</h1>
+      <h1>Frequently Search Destination</h1>
       <div className="destination-grid">
         {destinations.map((dest, index) => (
           <div className="destination-card" key={index}>
