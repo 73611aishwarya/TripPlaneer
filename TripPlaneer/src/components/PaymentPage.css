@@ -1,0 +1,133 @@
+/* PaymentPage.css */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7; /* Set a background color for the body */
+  margin: 0; /* Remove default margin */
+  padding: 20px; /* Add some padding to the body */
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center; /* Center the heading */
+}
+
+.payment-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.payment-option {
+  background-color: transparent; /* Remove blue background */
+  color: black; /* Set text color */
+  padding: 20px; /* Increased padding */
+  margin: 10px; /* Increased margin */
+  border: none;
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 1.2rem; /* Increased font size */
+  transition: all 0.3s ease;
+  min-width: 150px; /* Increased minimum width */
+  text-align: center; /* Center text */
+}
+
+.payment-option:hover {
+  opacity: 0.8; /* Slightly change opacity on hover */
+}
+
+.payment-option.selected {
+  border: 2px solid #28a745; /* Green border for selected option */
+}
+
+.payment-image {
+  width: 100px; /* Set a fixed width for all images */
+  height: 100px; /* Set a fixed height for all images */
+  object-fit: cover; /* Ensure images cover the area without distortion */
+  margin-bottom: 10px; /* Space between image and text */
+}
+
+.total-amount {
+  font-size: 1.6rem; /* Increased font size */
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center; /* Center the total amount */
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center; /* Center the action buttons */
+  margin-top: 20px; /* Space above action buttons */
+}
+
+.action-button {
+  padding: 10px 20px; /* Padding for buttons */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin: 0 5px; /* Space between buttons */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.action-button.logout {
+  background-color: #007bff; /* Blue background for Logout button */
+}
+
+.action-button.logout:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.action-button.details {
+  background-color: gray; /* Gray background for Details button */
+}
+
+.action-button.details:hover {
+  background-color: darkgray; /* Darker gray on hover */
+}
+
+.action-button.ticket {
+  background-color: #28a745; /* Green background for Ticket Booking button */
+}
+
+.action-button.ticket:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.payment-status {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  text-align: center; /* Center the payment status message */
+}
+
+.payment-status.success {
+  color: #28a745; /* Green for success */
+}
+
+.payment-status.failure {
+  color: #e74c3c; /* Red for failure */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2rem; /* Smaller heading on mobile */
+  }
+
+  .payment-option {
+    font-size: 1rem; /* Smaller font size on mobile */
+    min-width: 100px; /* Smaller minimum width */
+  }
+
+  .total-amount {
+    font-size: 1.4rem; /* Smaller font size on mobile */
+  }
+
+  .action-button {
+    font-size: 1rem; /* Smaller font size on mobile */
+  }
+}
